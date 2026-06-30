@@ -44,9 +44,9 @@ static void trigger_next_button(void)
 {
     lvgl_port_lock(0);
     lv_obj_t *active_screen = lv_screen_active();
-    if (active_screen == lv_screen_active()){
-        if (objects.gardennextbtn != NULL) {
-            lv_obj_send_event(objects.gardennextbtn, LV_EVENT_SHORT_CLICKED, NULL);
+    if (active_screen == objects.gardenscreen){
+        if (objects.gardennext != NULL) {
+            lv_obj_send_event(objects.gardennext, LV_EVENT_SHORT_CLICKED, NULL);
             int current_btn = eez_get_global_variable_int(FLOW_GLOBAL_VARIABLE_CURRENT_BTN);
             ESP_LOGI(TAG, "next pressed, current_btn (may lag one tick) = %d", current_btn);
         }
@@ -66,9 +66,9 @@ static void trigger_next_button(void)
 static void trigger_ok_button(void)
 {
     lv_obj_t *active_screen = lv_screen_active();
-    if (active_screen == lv_screen_active()){
-        if (objects.gardenokbtn != NULL) {
-            lv_obj_send_event(objects.gardenokbtn, LV_EVENT_SHORT_CLICKED, NULL);
+    if (active_screen == objects.gardenscreen){
+        if (objects.gardenok != NULL) {
+            lv_obj_send_event(objects.gardenok, LV_EVENT_SHORT_CLICKED, NULL);
             int current_btn = eez_get_global_variable_int(FLOW_GLOBAL_VARIABLE_CURRENT_BTN);
             ESP_LOGI(TAG, "next pressed, current_btn (may lag one tick) = %d", current_btn);
         }
