@@ -59,7 +59,7 @@ static void trigger_next_button(void)
     }
     lvgl_port_unlock();
 
-    
+    } 
 }
 
 // --- OK: confirms selection on current_btn ---
@@ -81,7 +81,7 @@ static void trigger_ok_button(void)
     }
     lvgl_port_unlock();
 }
-
+}
 
 typedef void (*button_cb_t)(void);
 
