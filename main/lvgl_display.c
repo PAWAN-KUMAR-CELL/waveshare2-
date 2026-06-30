@@ -43,25 +43,41 @@ static lv_display_t *display = NULL;
 static void trigger_next_button(void)
 {
     lvgl_port_lock(0);
-    if (objects.nextbtn != NULL) {
+    lv_obj_t *active_screen = lv_screen_active();
+    if (active_screen == lv_screen_active()){
+        if (objects.gardennextbtn != NULL) {
+            lv_obj_send_event(objects.gardennextbtn, LV_EVENT_SHORT_CLICKED, NULL);
+            int current_btn = eez_get_global_variable_int(FLOW_GLOBAL_VARIABLE_CURRENT_BTN);
+            ESP_LOGI(TAG, "next pressed, current_btn (may lag one tick) = %d", current_btn);
+        }
+    } else { 
+        if (objects.nextbtn != NULL) {
         lv_obj_send_event(objects.nextbtn, LV_EVENT_SHORT_CLICKED, NULL);
+        // Flow queue runs on the next ui_tick() — value reflects a tick later, not synchronously
+        int current_btn = eez_get_global_variable_int(FLOW_GLOBAL_VARIABLE_CURRENT_BTN);
+        ESP_LOGI(TAG, "next pressed, current_btn (may lag one tick) = %d", current_btn);
     }
     lvgl_port_unlock();
 
-    // Flow queue runs on the next ui_tick() — value reflects a tick later, not synchronously
-    int current_btn = eez_get_global_variable_int(FLOW_GLOBAL_VARIABLE_CURRENT_BTN);
-    ESP_LOGI(TAG, "next pressed, current_btn (may lag one tick) = %d", current_btn);
+    
 }
 
 // --- OK: confirms selection on current_btn ---
 static void trigger_ok_button(void)
 {
-    int current = eez_get_global_variable_int(FLOW_GLOBAL_VARIABLE_CURRENT_BTN);
-    ESP_LOGI(TAG, "OK pressed, current_btn = %d", current);
-
-    lvgl_port_lock(0);
-    if (objects.okbtn != NULL) {
+    lv_obj_t *active_screen = lv_screen_active();
+    if (active_screen == lv_screen_active()){
+        if (objects.gardenokbtn != NULL) {
+            lv_obj_send_event(objects.gardenokbtn, LV_EVENT_SHORT_CLICKED, NULL);
+            int current_btn = eez_get_global_variable_int(FLOW_GLOBAL_VARIABLE_CURRENT_BTN);
+            ESP_LOGI(TAG, "next pressed, current_btn (may lag one tick) = %d", current_btn);
+        }
+    } else { 
+        if (objects.okbtn != NULL) {
         lv_obj_send_event(objects.okbtn, LV_EVENT_SHORT_CLICKED, NULL);
+        // Flow queue runs on the next ui_tick() — value reflects a tick later, not synchronously
+        int current_btn = eez_get_global_variable_int(FLOW_GLOBAL_VARIABLE_CURRENT_BTN);
+        ESP_LOGI(TAG, "next pressed, current_btn (may lag one tick) = %d", current_btn);
     }
     lvgl_port_unlock();
 }
